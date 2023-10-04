@@ -4,14 +4,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class NumberProcesser {
 
-    public static void processArgsFromCLI(String[] ar) {
+    public static void processArgsFromCLI(String[] args) {
         List<Integer> numbers = new ArrayList<>();
-        if (ar.length > 2) {
-            for (String str : ar) {
+        if (args.length > 2) {
+            for (String str : args) {
                 for (char c : str.toCharArray()) {
                     if (!Character.isDigit(c)) {
                         System.out.println("zadavejte pouze cisla nebo jen adresu zdroje, popripade muzete pridat adresu vystupu");
@@ -22,36 +21,36 @@ public class NumberProcesser {
             }
             List<Integer> processedNumbers = processList(numbers);
             System.out.println(processedNumbers);
-        } else if (ar.length == 1) {
+        } else if (args.length == 1) {
             boolean isItNumber = true;
-            for (char c : ar[0].toCharArray()) {
+            for (char c : args[0].toCharArray()) {
                 if (!Character.isDigit(c)) {
                     isItNumber = false;
                     break;
                 }
             }
             if (isItNumber) {
-                if (Integer.parseInt(ar[0]) % 2 == 1){
-                    System.out.println(ar[0]);
+                if (Integer.parseInt(args[0]) % 2 == 1){
+                    System.out.println(args[0]);
                 }
             } else {
-                List<Integer> raw = readNumbersFromFile(ar[0]);
+                List<Integer> raw = readNumbersFromFile(args[0]);
                 if (raw == null){
                     return;
                 }
                 List<Integer> fileInput = processList(raw);
                 System.out.println(fileInput);
             }
-        } else if (ar.length == 2) {
+        } else if (args.length == 2) {
             boolean isFirstNumber = true;
             boolean isSecondNumber = true;
-            for (char c : ar[0].toCharArray()) {
+            for (char c : args[0].toCharArray()) {
                 if (!Character.isDigit(c)) {
                     isFirstNumber = false;
                     break;
                 }
             }
-            for (char c : ar[1].toCharArray()) {
+            for (char c : args[1].toCharArray()) {
                 if (!Character.isDigit(c)) {
                     isSecondNumber = false;
                     break;
@@ -59,8 +58,8 @@ public class NumberProcesser {
             }
             if (isFirstNumber && isSecondNumber) {
                 List<Integer> printNums = new ArrayList<>();
-                printNums.add(Integer.parseInt(ar[0]));
-                printNums.add(Integer.parseInt(ar[1]));
+                printNums.add(Integer.parseInt(args[0]));
+                printNums.add(Integer.parseInt(args[1]));
                 System.out.println(processList(printNums));
                 return;
             }
@@ -68,24 +67,24 @@ public class NumberProcesser {
                 System.out.println("invalid arguments");
                 return;
             }
-            List<Integer> unprocessed = readNumbersFromFile(ar[0]);
+            List<Integer> unprocessed = readNumbersFromFile(args[0]);
             assert unprocessed != null;
             List<Integer> fileInput = processList(unprocessed);
             if (fileInput == null) {
                 return;
             }
-            if (unprocessed.size() % 2 == 0 || !ar[1].contains(".")) {  // in task instructions, it says if amount of read numbers is even, allways just print
+            if (unprocessed.size() % 2 == 0 || !args[1].contains(".")) {  // in task instructions, it says if amount of read numbers is even, allways just print
                 System.out.println("Neulozeno, jen vytisknuto, pocet vstupu je sudy");
                 System.out.println(fileInput);
             } else {
-                writeNumbersToFile(fileInput, ar[1]);
-                System.out.println("Your file is at: src/resources/" + ar[1]);
+                writeNumbersToFile(fileInput, args[1]);
+                System.out.println("Your file is at: src/resources/" + args[1]);
             }
         }
     }
 
     public static void writeNumbersToFile(List<Integer> numbers, String filename) {
-        Path filePath = Paths.get("src\\resources\\" + filename);
+        Path filePath = Paths.get("resources\\" + filename);
         List<String> content = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         for (int x : numbers) {
@@ -101,7 +100,7 @@ public class NumberProcesser {
     }
 
     public static List<Integer> readNumbersFromFile(String filename) {
-        Path filePath = Paths.get("src\\resources\\" + filename);
+        Path filePath = Paths.get("resources\\" + filename);
         List<String> lines;
         try {
             lines = Files.readAllLines(filePath);
