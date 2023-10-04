@@ -70,6 +70,9 @@ public class Main {
             List<Integer> unprocessed = readNumbersFromFile(ar[0]);
             assert unprocessed != null;
             List<Integer> fileInput = processList(unprocessed);
+            if (fileInput == null){
+                return;
+            }
             if (unprocessed.size() % 2 == 0 || !ar[1].contains(".")){  // in task instructions, it says if amount of read numbers is even, allways just print
                 System.out.println("Neulozeno, jen vytisknuto, pocet vstupu je sudy");
                 System.out.println(fileInput);
@@ -91,7 +94,7 @@ public class Main {
         }
         content.add(sb.substring(0, sb.length()-1));
         try {
-            Files.write(filePath,content); //re-write file content, was unclear if we wanna keep origin in case of conflict
+            Files.write(filePath,content); //re-write file content, was unclear if we wanna rewrite origin in case of conflict or append
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -99,11 +102,11 @@ public class Main {
 
     public static List<Integer> readNumbersFromFile(String filename) {
         Path filePath = Paths.get("src\\assets\\"+filename);
-        List<String> lines = new ArrayList<>();
+        List<String> lines;
         try {
             lines = Files.readAllLines(filePath);
-        } catch (IOException e) {
-            System.out.println("File does not exist");
+        } catch (Exception e) {
+            System.out.println("404 File not found");
             System.out.println(e.getMessage());
             return null;
         }
@@ -127,6 +130,9 @@ public class Main {
     }
     public static List<Integer> processList(List<Integer> ilist){
         List<Integer> nmbrsToPrintSave = new ArrayList<>();
+        if (ilist == null){
+            return null;
+        }
         if (ilist.size() % 2 == 0){
             for (int x : ilist){
                 if (x % 2 == 0){
