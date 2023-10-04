@@ -106,8 +106,8 @@ public class NumberProcesser {
         try {
             lines = Files.readAllLines(filePath);
         } catch (Exception e) {
-            System.out.println("404 File not found");
-            System.out.println(e.getMessage());
+            System.err.println("404 File not found");
+            System.err.println(e.getMessage());
             return null;
         }
         List<Integer> numbersList = new ArrayList<>();
