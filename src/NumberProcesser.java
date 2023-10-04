@@ -58,7 +58,7 @@ public class NumberProcesser {
                 System.out.println(processList(printNums));
                 return;
             }
-            if ((isFirstNumber && !isSecondNumber) || (!isFirstNumber && isSecondNumber)) {
+            if (isFirstNumber || isSecondNumber) {
                 System.out.println("invalid arguments");
                 return;
             }
