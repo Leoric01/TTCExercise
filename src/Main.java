@@ -39,9 +39,12 @@ public class Main {
     public static void writeNumbersToFile(List<Integer> numbers, String filename){
         Path filePath = Paths.get("src\\assets\\"+filename);
         List<String> content = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
         for (int x : numbers){
-            content.add(String.valueOf(x));
+            sb.append(x);
+            sb.append(",");
         }
+        content.add(sb.substring(0, sb.length()-1));
         try {
             Files.write(filePath,content); //re-write file content, was unclear if we wanna keep origin in case of conflict
         } catch (IOException e){
