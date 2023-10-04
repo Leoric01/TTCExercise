@@ -73,13 +73,13 @@ public class NumberProcesser {
                 System.out.println(fileInput);
             } else {
                 writeNumbersToFile(fileInput, ar[1]);
-                System.out.println("Your file is at: src/assets/" + ar[1]);
+                System.out.println("Your file is at: src/resources/" + ar[1]);
             }
         }
     }
 
     public static void writeNumbersToFile(List<Integer> numbers, String filename) {
-        Path filePath = Paths.get("src\\assets\\" + filename);
+        Path filePath = Paths.get("src\\resources\\" + filename);
         List<String> content = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         for (int x : numbers) {
@@ -95,7 +95,7 @@ public class NumberProcesser {
     }
 
     public static List<Integer> readNumbersFromFile(String filename) {
-        Path filePath = Paths.get("src\\assets\\" + filename);
+        Path filePath = Paths.get("src\\resources\\" + filename);
         List<String> lines;
         try {
             lines = Files.readAllLines(filePath);
