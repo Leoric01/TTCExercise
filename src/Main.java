@@ -4,34 +4,40 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
         if (args.length < 1){
             System.out.println("zadejte budto cisla oddelena mezerou, nebo cestu k souboru odkud cisla nacist, nebo muzete pridat soubor kam vysledek ulozit ");
         }
-
-        processNumbersFromCLI(args);
+        processArgsFromCLI(args);
     }
 
-    public static List<Integer> processNumbersFromCLI(String[] ar){
+    public static void processArgsFromCLI(String[] ar){
         List<Integer> numbers = new ArrayList<>();
         if (ar.length > 2){
             for (String str : ar){
                 for (char c : str.toCharArray()){
                     if (!Character.isDigit(c)){
                         System.out.println("zadavejte pouze cisla nebo jen adresu zdroje, popripade muzete pridat adresu vystupu");
-                        return null;
+                        return;
                     }
                 }
                 numbers.add(Integer.parseInt(str));
             }List<Integer> processedNumbers = processList(numbers);
             System.out.println(processedNumbers);
-        }return null;
+        }
+        else if (ar.length == 1){
+            List<Integer> fileInput = processList(Objects.requireNonNull(readNumbersFromFile(ar[0])));
+            System.out.println(fileInput);
+        }else if (ar.length == 2){
+            writeNumbersToFile(processList(Objects.requireNonNull(readNumbersFromFile(ar[0]))),ar[1]);
+        }
     }
 
-    public static void writeNumbersToFile(List<Integer> numbers, String relativepath){
-        Path filePath = Paths.get(relativepath);
+    public static void writeNumbersToFile(List<Integer> numbers, String filename){
+        Path filePath = Paths.get("src\\assets\\"+filename);
         List<String> content = new ArrayList<>();
         for (int x : numbers){
             content.add(String.valueOf(x));
@@ -43,8 +49,8 @@ public class Main {
         }
     }
 
-    public static List<Integer> readNumbersFromFile(String relativepath) {
-        Path filePath = Paths.get(relativepath);
+    public static List<Integer> readNumbersFromFile(String filename) {
+        Path filePath = Paths.get("src\\assets\\"+filename);
         List<String> lines = new ArrayList<>();
         try {
             lines = Files.readAllLines(filePath);
