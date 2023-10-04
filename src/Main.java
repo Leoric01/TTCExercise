@@ -11,13 +11,23 @@ public class Main {
             System.out.println("zadejte budto cisla oddelena mezerou, nebo cestu k souboru odkud cisla nacist, nebo muzete pridat soubor kam vysledek ulozit ");
         }
 
+        processNumbersFromCLI(args);
     }
 
     public static List<Integer> processNumbersFromCLI(String[] ar){
-        boolean number = false;
-        for (String x : ar){
-
-        }
+        List<Integer> numbers = new ArrayList<>();
+        if (ar.length > 2){
+            for (String str : ar){
+                for (char c : str.toCharArray()){
+                    if (!Character.isDigit(c)){
+                        System.out.println("zadavejte pouze cisla nebo jen adresu zdroje, popripade muzete pridat adresu vystupu");
+                        return null;
+                    }
+                }
+                numbers.add(Integer.parseInt(str));
+            }List<Integer> processedNumbers = processList(numbers);
+            System.out.println(processedNumbers);
+        }return null;
     }
 
     public static void writeNumbersToFile(List<Integer> numbers, String relativepath){
@@ -61,7 +71,7 @@ public class Main {
         }
         return numbersList;
     }
-    public static List<Integer> processedList(List<Integer> ilist){
+    public static List<Integer> processList(List<Integer> ilist){
         List<Integer> nmbrsToPrintSave = new ArrayList<>();
         if (ilist.size() % 2 == 0){
             for (int x : ilist){
