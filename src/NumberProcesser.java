@@ -35,7 +35,11 @@ public class NumberProcesser {
                     System.out.println(ar[0]);
                 }
             } else {
-                List<Integer> fileInput = processList(Objects.requireNonNull(readNumbersFromFile(ar[0])));
+                List<Integer> raw = readNumbersFromFile(ar[0]);
+                if (raw == null){
+                    return;
+                }
+                List<Integer> fileInput = processList(raw);
                 System.out.println(fileInput);
             }
         } else if (ar.length == 2) {
