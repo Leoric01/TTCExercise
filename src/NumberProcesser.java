@@ -84,7 +84,7 @@ public class NumberProcesser {
     }
 
     public static void writeNumbersToFile(List<Integer> numbers, String filename) {
-        Path filePath = Paths.get("resources\\" + filename);
+        Path filePath = Paths.get("src\\resources\\" + filename);
         List<String> content = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         for (int x : numbers) {
@@ -100,7 +100,7 @@ public class NumberProcesser {
     }
 
     public static List<Integer> readNumbersFromFile(String filename) {
-        Path filePath = Paths.get("resources\\" + filename);
+        Path filePath = Paths.get("src\\resources\\" + filename);
         List<String> lines;
         try {
             lines = Files.readAllLines(filePath);
