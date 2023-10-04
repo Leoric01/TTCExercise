@@ -1,4 +1,4 @@
-# TTCMExercise
+# TTCExercise
 simple console app
 
 ZADÁNÍ:
