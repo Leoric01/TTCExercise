@@ -31,7 +31,9 @@ public class NumberProcesser {
                 }
             }
             if (isItNumber) {
-                System.out.println(ar[0]);
+                if (Integer.parseInt(ar[0]) % 2 == 1){
+                    System.out.println(ar[0]);
+                }
             } else {
                 List<Integer> fileInput = processList(Objects.requireNonNull(readNumbersFromFile(ar[0])));
                 System.out.println(fileInput);
