@@ -29,10 +29,55 @@ public class Main {
             System.out.println(processedNumbers);
         }
         else if (ar.length == 1){
-            List<Integer> fileInput = processList(Objects.requireNonNull(readNumbersFromFile(ar[0])));
-            System.out.println(fileInput);
+            boolean isItNumber = true;
+            for (char c : ar[0].toCharArray()){
+                if (!Character.isDigit(c)){
+                    isItNumber = false;
+                    break;
+                }
+            }
+            if (isItNumber){
+                System.out.println(ar[0]);
+            }else {
+                List<Integer> fileInput = processList(Objects.requireNonNull(readNumbersFromFile(ar[0])));
+                System.out.println(fileInput);
+            }
         }else if (ar.length == 2){
-            writeNumbersToFile(processList(Objects.requireNonNull(readNumbersFromFile(ar[0]))),ar[1]);
+            boolean isFirstNumber = true;
+            boolean isSecondNumber = true;
+            for (char c : ar[0].toCharArray()){
+                if (!Character.isDigit(c)){
+                    isFirstNumber = false;
+                    break;
+                }
+            }
+            for (char c : ar[1].toCharArray()){
+                if (!Character.isDigit(c)){
+                    isSecondNumber = false;
+                    break;
+                }
+            }if (isFirstNumber &&  isSecondNumber){
+                List<Integer> printNums = new ArrayList<>();
+                printNums.add(Integer.parseInt(ar[0]));
+                printNums.add(Integer.parseInt(ar[1]));
+                System.out.println(processList(printNums));
+                return;
+            }
+            if (isFirstNumber && !isSecondNumber || !isFirstNumber && isSecondNumber){
+                System.out.println("invalid arguments");
+                return;
+            }
+            List<Integer> unprocessed = readNumbersFromFile(ar[0]);
+            assert unprocessed != null;
+            List<Integer> fileInput = processList(unprocessed);
+            if (unprocessed.size() % 2 == 0 || !ar[1].contains(".")){  // in task instructions, it says if amount of read numbers is even, allways just print
+                System.out.println("Neulozeno, jen vytisknuto, pocet vstupu je sudy");
+                System.out.println(fileInput);
+            }
+            else {
+                writeNumbersToFile(fileInput,ar[1]);
+                System.out.println("Your file is at: src/assets/"+ar[1]);
+            }
         }
     }
 
@@ -67,7 +112,7 @@ public class Main {
             String[] numbers = line.split(","); // numbers must be split by comma in file, i can add some replace if necessary for other separators
             for (String numStr : numbers) {
                 StringBuilder sb = new StringBuilder();
-                for (char c : numStr.toCharArray()) {
+                for (char c : numStr.toCharArray()) { // adding numbers only
                     if (Character.isDigit(c)) {
                         sb.append(c);
                     }
