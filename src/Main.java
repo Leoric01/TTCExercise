@@ -63,7 +63,7 @@ public class Main {
                 System.out.println(processList(printNums));
                 return;
             }
-            if (isFirstNumber && !isSecondNumber || !isFirstNumber && isSecondNumber){
+            if ((isFirstNumber && !isSecondNumber) || (!isFirstNumber && isSecondNumber)){
                 System.out.println("invalid arguments");
                 return;
             }
